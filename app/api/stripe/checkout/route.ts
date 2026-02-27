@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server';
 import Stripe from 'stripe';
 
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', { apiVersion: '2024-06-20' });
+
 const planToPrice: Record<string, string | undefined> = {
   starter: process.env.STRIPE_PRICE_STARTER,
   pro: process.env.STRIPE_PRICE_PRO,
@@ -8,7 +10,6 @@ const planToPrice: Record<string, string | undefined> = {
 };
 
 export async function POST(request: Request) {
-  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', { apiVersion: '2024-06-20' });
   const { plan } = await request.json();
   const price = planToPrice[plan];
   if (!price) return NextResponse.json({ error: 'Invalid plan' }, { status: 400 });
