@@ -1,30 +1,43 @@
-{
-  "name": "mark2",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
-  },
-  "dependencies": {
-    "next": "14.2.6",
-    "next-auth": "^4.24.7",
-    "react": "18.3.1",
-    "react-dom": "18.3.1",
-    "stripe": "^17.3.0",
-    "three": "^0.170.0"
-  },
-  "devDependencies": {
-    "@types/node": "20.14.14",
-    "@types/react": "18.3.3",
-    "@types/react-dom": "18.3.0",
-    "autoprefixer": "10.4.20",
-    "eslint": "8.57.0",
-    "eslint-config-next": "14.2.6",
-    "postcss": "8.4.41",
-    "tailwindcss": "3.4.10",
-    "typescript": "5.5.4"
-  }
+'use client'
+import { useApp } from '../lib/store'
+
+export default function HowItWorksSection() {
+  const { t } = useApp()
+  const steps = [
+    { num: '01', key: 'step1', desc: 'JPG, PNG, WEBP — up to 20MB' },
+    { num: '02', key: 'step2', desc: 'Modern, Scandinavian, Industrial, Bohemian...' },
+    { num: '03', key: 'step3', desc: 'High-res PNG, ready to present' },
+  ]
+
+  return (
+    <section id="how-it-works" style={{ padding: '8rem 2rem', background: 'var(--bg-secondary)' }}>
+      <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+        <div style={{ textAlign: 'center', marginBottom: '5rem' }}>
+          <p style={{ color: '#c9a84c', fontSize: '0.75rem', letterSpacing: '0.2em', textTransform: 'uppercase', marginBottom: '1rem', fontWeight: 500 }}>Process</p>
+          <h2 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: 'clamp(2.5rem, 5vw, 4rem)', fontWeight: 700, marginBottom: '1rem' }}>{t('how_title')}</h2>
+          <p style={{ color: '#9999aa', fontSize: '1.1rem' }}>{t('how_sub')}</p>
+        </div>
+
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '2rem', position: 'relative' }}>
+          {steps.map((s, i) => (
+            <div key={s.num} style={{ textAlign: 'center', padding: '3rem 2rem' }}>
+              <div style={{
+                width: '80px', height: '80px', borderRadius: '50%',
+                border: '1px solid rgba(201,168,76,0.4)',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                margin: '0 auto 2rem',
+                background: 'rgba(201,168,76,0.05)',
+                position: 'relative'
+              }}>
+                <span style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '1.75rem', fontWeight: 700, color: '#c9a84c' }}>{s.num}</span>
+                {i < 2 && <div style={{ position: 'absolute', right: '-100%', top: '50%', width: '100%', height: '1px', background: 'linear-gradient(to right, rgba(201,168,76,0.4), transparent)', display: 'none' }} />}
+              </div>
+              <h3 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '1.75rem', fontWeight: 700, marginBottom: '0.75rem' }}>{t(s.key)}</h3>
+              <p style={{ color: '#9999aa', fontSize: '0.9rem' }}>{s.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
 }
